@@ -103,7 +103,11 @@ class Haproxy
     #sessions_per_gear = sessions / gear_count
     #session_capacity_pct = (sessions_per_gear / MAX_SESSIONS_PER_GEAR ) * 100
   
-    MAX_SESSIONS_PER_GEAR = 10.0
+    if ENV["OPENSHIFT_MAX_SESSIONS_PER_GEAR"] = false
+	MAX_SESSIONS_PER_GEAR = 10.0
+    else
+	MAX_SESSIONS_PER_GEAR = ENV["OPENSHIFT_MAX_SESSIONS_PER_GEAR"]
+    end
 
     class ShouldRetry < StandardError
       attr_reader :message
